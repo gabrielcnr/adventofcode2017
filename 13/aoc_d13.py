@@ -3,6 +3,7 @@ import collections
 up = lambda x: x - 1
 down = lambda x: x + 1
 
+
 class Layer(object):
     def __init__(self, depth, range_, scanner):
         self.depth = depth
@@ -78,7 +79,6 @@ def get_scanner_pos(counter, depth):
     return remainder
 
 
-
 def part2(input):
     """
     The scanner will be in pos0 every range*2 picoseconds, and the pkg will be 
@@ -102,15 +102,13 @@ def part2(input):
     ...
     x + k not a multiple ak
     """
-    counter = 0
-    pkg_pos = -1
     layers = {}
 
     for line in input.strip().split('\n'):
-        
+
         if not line:
             continue
-        
+
         depth, range_ = [int(n) for n in line.split(': ')]
         layers[depth] = 2 * (range_ - 1)
 
@@ -125,15 +123,11 @@ def part2(input):
                 found = False
                 delay += 1
                 break
-    return delay    
-            
+    return delay
+
 
 if __name__ == '__main__':
     with open('input.txt') as f:
         contents = f.read()
     print('part1', part1(contents))
     print('part2', part2(contents))
-
-
-
-

@@ -1,15 +1,11 @@
+import pytest
+
 def part1(pipes):
-    programs = {}
+    programs = parse(pipes)
 
     zero = set([0])
 
-    for pipe in pipes:
-        left, right = pipe.strip().split(' <-> ')
-
-        prog_left = int(left)
-        programs_right = [int(p) for p in right.split(', ')]
-        programs[prog_left] = programs_right
-
+    for prog_left, programs_right in programs.items():
         # if the program on the left is already on the set of programs connected to zero
         # then automatically we promote all the programs on the right hand side
         # to the set of programs connect to zero
@@ -34,9 +30,26 @@ def part1(pipes):
 
     return programs, zero
 
+def parse(pipes):
+    programs = {}
 
-def test_input():
-    contents = """0 <-> 2
+    for pipe in pipes:
+        left, right = pipe.strip().split(' <-> ')
+
+        prog_left = int(left)
+        programs_right = [int(p) for p in right.split(', ')]
+        programs[prog_left] = programs_right
+
+    return programs
+
+
+def part2(pipes):
+    pass
+
+
+@pytest.fixture
+def contents():
+    return """0 <-> 2
 1 <-> 1
 2 <-> 0, 3, 4
 3 <-> 2, 4
@@ -44,11 +57,18 @@ def test_input():
 5 <-> 6
 6 <-> 4, 5"""
 
+
+def test_part1(contents):
+
     programs, zero = part1(contents.strip().split('\n'))
 
     assert 6 == len(zero)
 
     assert [1] == [p for p in programs if p not in zero]
+
+
+def _test_part2(contents):
+    assert 2 == part2(contents)
 
 
 if __name__ == '__main__':

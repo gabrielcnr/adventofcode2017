@@ -6,14 +6,14 @@ def part1(pipes):
     for pipe in pipes:
         left, right = pipe.strip().split(' <-> ')
 
-        p = int(left)
+        prog_left = int(left)
         programs_right = [int(p) for p in right.split(', ')]
-        programs[p] = programs_right
+        programs[prog_left] = programs_right
 
         # if the program on the left is already on the set of programs connected to zero
         # then automatically we promote all the programs on the right hand side
         # to the set of programs connect to zero
-        if p in zero:
+        if prog_left in zero:
             zero = zero.union(programs_right)
 
         visited = set()
